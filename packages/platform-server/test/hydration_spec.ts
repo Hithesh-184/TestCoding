@@ -29,7 +29,6 @@ import {
   ComponentRef,
   ContentChildren,
   createComponent,
-  DEFER_BLOCK_CONFIG,
   destroyPlatform,
   Directive,
   ElementRef,
@@ -67,6 +66,7 @@ import {
   provideClientHydration,
   withI18nSupport,
   withEventReplay,
+  withPartialHydration,
 } from '@angular/platform-browser';
 import {HydrationFeatureKind} from '@angular/platform-browser/src/hydration';
 import {provideRouter, RouterOutlet, Routes} from '@angular/router';
@@ -7833,7 +7833,7 @@ describe('platform-server hydration integration', () => {
       });
     });
 
-    describe('jsaction', () => {
+    describe('partial hydration', () => {
       const originalDocument = globalThis.document;
       const originalWindow = globalThis.window;
 
@@ -7863,14 +7863,14 @@ describe('platform-server hydration integration', () => {
           selector: 'app',
           template: `
             <main (click)="fnA()">
-              @defer (on interaction) {
+              @defer (on viewport; hydrate on interaction) {
                 <article (click)="fnA()">
                   Main defer block rendered!
                   @if (visible) {
                     Defer events work!
                   }
                   <aside id="outer-trigger" (mouseover)="showMessage()"></aside>
-                  @defer (on interaction) {
+                  @defer (on viewport; hydrate on interaction) {
                     <p (click)="fnA()">Nested defer block</p>
                   } @placeholder {
                     <span>Inner block placeholder</span>
@@ -7892,11 +7892,8 @@ describe('platform-server hydration integration', () => {
         }
 
         const appId = 'custom-app-id';
-        const providers = [
-          {provide: APP_ID, useValue: appId},
-          {provide: DEFER_BLOCK_CONFIG, useValue: {enableOnServer: true}},
-        ];
-        const hydrationFeatures = [withEventReplay()];
+        const providers = [{provide: APP_ID, useValue: appId}];
+        const hydrationFeatures = [withPartialHydration()];
 
         const html = await ssr(SimpleComponent, {envProviders: providers, hydrationFeatures});
         const ssrContents = getAppContents(html);
@@ -7977,14 +7974,14 @@ describe('platform-server hydration integration', () => {
           selector: 'app',
           template: `
             <main (click)="fnA()">
-              @defer (on interaction) {
+              @defer (on viewport; hydrate on interaction) {
                 <div (click)="fnA()">
                   Main defer block rendered!
                   @if (visible) {
                     Defer events work!
                   }
                   <div id="outer-trigger" (mouseover)="showMessage()"></div>
-                  @defer (on interaction) {
+                  @defer (on viewport; hydrate on interaction) {
                     <p (click)="showMessage()">Nested defer block</p>
                   } @placeholder {
                     <span>Inner block placeholder</span>
@@ -8006,11 +8003,8 @@ describe('platform-server hydration integration', () => {
         }
 
         const appId = 'custom-app-id';
-        const providers = [
-          {provide: APP_ID, useValue: appId},
-          {provide: DEFER_BLOCK_CONFIG, useValue: {enableOnServer: true}},
-        ];
-        const hydrationFeatures = [withEventReplay()];
+        const providers = [{provide: APP_ID, useValue: appId}];
+        const hydrationFeatures = [withPartialHydration()];
 
         const html = await ssr(SimpleComponent, {envProviders: providers, hydrationFeatures});
         const ssrContents = getAppContents(html);
@@ -8108,14 +8102,14 @@ describe('platform-server hydration integration', () => {
         imports: [DepB],
         template: `
           <main (click)="fnA()">
-            @defer (on interaction) {
+            @defer (on viewport; hydrate on interaction) {
               <div (click)="fnA()">
                 Main defer block rendered!
                 @if (visible) {
                   Defer events work!
                 }
                 <div id="outer-trigger" (mouseover)="showMessage()"></div>
-                @defer (on interaction) {
+                @defer (on viewport; hydrate on interaction) {
                   <p (click)="fnA()">Nested defer block</p>
                   <dep-b />
                 } @placeholder {
@@ -8138,11 +8132,8 @@ describe('platform-server hydration integration', () => {
       }
 
       const appId = 'custom-app-id';
-      const providers = [
-        {provide: APP_ID, useValue: appId},
-        {provide: DEFER_BLOCK_CONFIG, useValue: {enableOnServer: true}},
-      ];
-      const hydrationFeatures = [withEventReplay()];
+      const providers = [{provide: APP_ID, useValue: appId}];
+      const hydrationFeatures = [withPartialHydration()];
 
       const html = await ssr(SimpleComponent, {envProviders: providers, hydrationFeatures});
       const ssrContents = getAppContents(html);
