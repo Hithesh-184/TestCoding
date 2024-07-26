@@ -114,9 +114,6 @@
     "name": "DEFER_BLOCK_CONFIG"
   },
   {
-    "name": "DEFER_BLOCK_CONFIG2"
-  },
-  {
     "name": "DEFER_BLOCK_ID"
   },
   {
@@ -2530,9 +2527,6 @@
   },
   {
     "name": "ɵɵdefer"
-  },
-  {
-    "name": "ɵɵdeferWhen"
   },
   {
     "name": "ɵɵdefineComponent"
