@@ -368,20 +368,24 @@ export interface ContentChildFunction {
     <LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
         descendants?: boolean;
         read?: undefined;
+        debugName?: string;
     }): Signal<LocatorT | undefined>;
     // (undocumented)
     <LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
         descendants?: boolean;
         read: ProviderToken<ReadT>;
+        debugName?: string;
     }): Signal<ReadT | undefined>;
     required: {
         <LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
             descendants?: boolean;
             read?: undefined;
+            debugName?: string;
         }): Signal<LocatorT>;
         <LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
             descendants?: boolean;
             read: ProviderToken<ReadT>;
+            debugName?: string;
         }): Signal<ReadT>;
     };
 }
@@ -396,12 +400,14 @@ export const ContentChildren: ContentChildrenDecorator;
 export function contentChildren<LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
     descendants?: boolean;
     read?: undefined;
+    debugName?: string;
 }): Signal<ReadonlyArray<LocatorT>>;
 
 // @public (undocumented)
 export function contentChildren<LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
     descendants?: boolean;
     read: ProviderToken<ReadT>;
+    debugName?: string;
 }): Signal<ReadonlyArray<ReadT>>;
 
 // @public
@@ -429,12 +435,14 @@ export function createComponent<C>(component: Type<C>, options: {
 
 // @public
 export interface CreateComputedOptions<T> {
+    debugName?: string;
     equal?: ValueEqualityFn<T>;
 }
 
 // @public
 export interface CreateEffectOptions {
     allowSignalWrites?: boolean;
+    debugName?: string;
     injector?: Injector;
     manualCleanup?: boolean;
 }
@@ -456,6 +464,7 @@ export function createPlatformFactory(parentPlatformFactory: ((extraProviders?: 
 
 // @public
 export interface CreateSignalOptions<T> {
+    debugName?: string;
     equal?: ValueEqualityFn<T>;
 }
 
@@ -982,6 +991,7 @@ export interface InputFunction {
 // @public
 export interface InputOptions<T, TransformT> {
     alias?: string;
+    debugName?: string;
     transform?: (v: TransformT) => T;
 }
 
@@ -1142,6 +1152,7 @@ export interface ModelFunction {
 // @public
 export interface ModelOptions {
     alias?: string;
+    debugName?: string;
 }
 
 // @public
@@ -1760,15 +1771,21 @@ export interface ViewChildDecorator {
 
 // @public
 export interface ViewChildFunction {
-    <LocatorT>(locator: ProviderToken<LocatorT> | string): Signal<LocatorT | undefined>;
+    <LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
+        debugName?: string;
+    }): Signal<LocatorT | undefined>;
     // (undocumented)
     <LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
         read: ProviderToken<ReadT>;
+        debugName?: string;
     }): Signal<ReadT | undefined>;
     required: {
-        <LocatorT>(locator: ProviderToken<LocatorT> | string): Signal<LocatorT>;
+        <LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
+            debugName?: string;
+        }): Signal<LocatorT>;
         <LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
             read: ProviderToken<ReadT>;
+            debugName?: string;
         }): Signal<ReadT>;
     };
 }
@@ -1780,11 +1797,14 @@ export type ViewChildren = Query;
 export const ViewChildren: ViewChildrenDecorator;
 
 // @public (undocumented)
-export function viewChildren<LocatorT>(locator: ProviderToken<LocatorT> | string): Signal<ReadonlyArray<LocatorT>>;
+export function viewChildren<LocatorT>(locator: ProviderToken<LocatorT> | string, opts?: {
+    debugName?: string;
+}): Signal<ReadonlyArray<LocatorT>>;
 
 // @public (undocumented)
 export function viewChildren<LocatorT, ReadT>(locator: ProviderToken<LocatorT> | string, opts: {
     read: ProviderToken<ReadT>;
+    debugName?: string;
 }): Signal<ReadonlyArray<ReadT>>;
 
 // @public
