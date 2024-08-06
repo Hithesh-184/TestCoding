@@ -16,7 +16,7 @@ import {
   runInInjectionContext,
   ɵConsole as Console,
   ɵformatRuntimeError as formatRuntimeError,
-  ɵPendingTasks as PendingTasks,
+  ExperimentalPendingTasks,
 } from '@angular/core';
 import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
@@ -241,11 +241,11 @@ export function legacyInterceptorFnFactory(): HttpInterceptorFn {
       );
     }
 
-    const pendingTasks = inject(PendingTasks);
+    const pendingTasks = inject(ExperimentalPendingTasks);
     const contributeToStability = inject(REQUESTS_CONTRIBUTE_TO_STABILITY);
     if (contributeToStability) {
-      const taskId = pendingTasks.add();
-      return chain(req, handler).pipe(finalize(() => pendingTasks.remove(taskId)));
+      const removeTask = pendingTasks.add();
+      return chain(req, handler).pipe(finalize(() => removeTask()));
     } else {
       return chain(req, handler);
     }
