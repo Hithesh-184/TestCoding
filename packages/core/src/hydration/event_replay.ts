@@ -46,7 +46,7 @@ import {
 import {APP_ID} from '../application/application_tokens';
 import {performanceMarkFeature} from '../util/performance';
 import {hydrateFromBlockName, findFirstKnownParentDeferBlock} from './blocks';
-import {Trigger} from '../defer/interfaces';
+import {HydrateTrigger, Trigger} from '../defer/interfaces';
 
 /**
  * A set of in progress hydrating blocks
@@ -274,7 +274,9 @@ function replayQueuedBlockEvents(hydratedBlocks: Set<string>, injector: Injector
   removeListenersFromBlocks([...hydratedBlocks], injector);
 }
 
-export function convertHydrateTriggersToJsAction(triggers: Trigger[] | null): string[] {
+export function convertHydrateTriggersToJsAction(
+  triggers: (Trigger | HydrateTrigger)[] | null,
+): string[] {
   let actionList: string[] = [];
   if (triggers !== null) {
     for (let trigger of triggers) {

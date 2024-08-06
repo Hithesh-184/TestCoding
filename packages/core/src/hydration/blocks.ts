@@ -93,7 +93,6 @@ export async function partialHydrateFromBlockName(
   blockName: string,
 ): Promise<void> {
   const hydratedBlocks = await hydrateFromBlockName(injector, blockName);
-  // TODO(thePunderWoman): restore original bindings here
   removeListenersFromBlocks([...hydratedBlocks], injector);
 }
 

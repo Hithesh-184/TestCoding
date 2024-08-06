@@ -25,6 +25,17 @@
     "packages/core/src/change_detection/differs/keyvalue_differs.ts"
   ],
   [
+    "packages/core/src/core_private_export.ts",
+    "packages/core/src/hydration/api.ts",
+    "packages/core/src/hydration/partial.ts",
+    "packages/core/src/core.ts"
+  ],
+  [
+    "packages/core/src/defer/instructions.ts",
+    "packages/core/src/defer/timer_scheduler.ts",
+    "packages/core/src/hydration/blocks.ts"
+  ],
+  [
     "packages/core/src/di/injectable.ts",
     "packages/core/src/di/jit/injectable.ts"
   ],

@@ -7,6 +7,7 @@
  */
 
 import {ɵɵdefineInjectable} from '../di';
+import {partialHydrateFromBlockName} from '../hydration/blocks';
 import {INJECTOR, LView} from '../render3/interfaces/view';
 import {arrayInsert2, arraySplice} from '../util/array_utils';
 
